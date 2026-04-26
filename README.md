@@ -1,20 +1,31 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Hydrotek Farm Monitoring
 
-# Run and deploy your AI Studio app
+A modern, high-end "Digital Greenhouse" monitoring application built with Flutter, integrated with AWS Amplify for authentication and data management. 
 
-This contains everything you need to run your app locally.
+The application UI is synchronized with Google Stitch design specifications.
 
-View your app in AI Studio: https://ai.studio/apps/6105684c-09be-4cae-b038-1ef062e01fcc
+## Prerequisites
 
-## Run Locally
+- [Flutter SDK](https://docs.flutter.dev/get-started/install) installed
+- Chrome browser (for web testing)
 
-**Prerequisites:**  Node.js
+## How to Run Locally
 
+1. Navigate to the Flutter project directory:
+   ```bash
+   cd hydrotek_flutter
+   ```
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+2. Install dependencies:
+   ```bash
+   flutter pub get
+   ```
+
+3. Run the application:
+   ```bash
+   flutter run -d chrome --web-port=3000
+   ```
+
+> **Important Note regarding Authentication:** 
+> This repository is configured to connect to a specific AWS Amplify / Cognito backend.
+> To use Google Sign-In, the web port you use (e.g., `3000`) MUST be registered in the AWS Cognito User Pool Allowed Callback URLs. If you experience a `redirect_mismatch` error during Google Sign-In, ensure the port matches the authorized redirect URI.
