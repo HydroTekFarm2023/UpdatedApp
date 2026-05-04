@@ -10,6 +10,24 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  Future<void> checkUserLoggedIn(BuildContext context) async {
+  try {
+    final session = await Amplify.Auth.fetchAuthSession();
+
+    if (session.isSignedIn && context.mounted) {
+      Navigator.pushReplacementNamed(context, '/dashboard');
+    }
+  } catch (e) {
+    safePrint('Error checking session: $e');
+  }}
+   @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      checkUserLoggedIn(context);
+    });
+  }
   final _emailController = TextEditingController(text: 'admin@hydrotek.farm');
   final _passwordController = TextEditingController(text: 'password123');
   bool _isPasswordVisible = false;
@@ -241,12 +259,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 OutlinedButton.icon(
                   onPressed: () async {
                     try {
-                      final result = await Amplify.Auth.signInWithWebUI(
-                        provider: AuthProvider.google,
-                      );
-                      if (result.isSignedIn && context.mounted) {
-                        Navigator.pushReplacementNamed(context, '/dashboard');
-                      }
+                      // final result = await Amplify.Auth.signInWithWebUI(
+                      //   provider: AuthProvider.google,
+                      // );
+                      await Amplify.Auth.signInWithWebUI(
+                      provider: AuthProvider.google,
+);
                     } on AuthException catch (e) {
                       safePrint('Error signing in with Google: ${e.message}');
                       if (context.mounted) {
